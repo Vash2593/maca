@@ -1,0 +1,6 @@
+# -*- mode: org -*-
+
+* Bison and Flex
+
+  The rules of our Makefile about flex and bison are highly inspired
+  of the [[http://lrde.epita.fr/cgi-bin/twiki/view/Vaucanson/Vaucanson][Vaucanson]]'s Makefiles.

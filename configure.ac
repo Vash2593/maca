@@ -57,6 +57,7 @@ AC_CONFIG_HEADERS([src/config.h:src/config.in.h])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  src/io/Makefile
   tests/Makefile
 ])
 

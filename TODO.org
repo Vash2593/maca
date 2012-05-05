@@ -1,0 +1,6 @@
+* [[http://lrde.epita.fr/~adl/ens/mc/2012/projet.txt][Subject]]
+* Kripke
+** Read file
+   [[file:src/io/kripke-lexer.ll][lexer]]
+** Parse File
+   [[file:src/io/krpke.yy][parser]]
