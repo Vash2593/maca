@@ -4,7 +4,7 @@
 #include <string>
 #include <cassert>
 #include <iostream>
-#include "kripke.hh"
+#include <io/kripke.hh>
 #include <boost/lexical_cast.hpp>
 
 #define LINE(Line)				\
