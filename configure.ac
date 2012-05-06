@@ -5,7 +5,8 @@ AC_INIT([Fixme], [0.1], [moreira@lrde.epita.fr]) # FIXME: Define it when create 
 AC_CONFIG_AUX_DIR([build-aux]) # FIXME: add build-aux
 AC_CONFIG_MACRO_DIR([build-aux/m4]) # FIXME: add build-aux
 
-AM_INIT_AUTOMAKE([1.11 tar-ustar no-define foreign dist-xz color-tests
+AM_INIT_AUTOMAKE([1.11 tar-ustar no-define foreign dist-xz
+                  color-tests
                   parallel-tests nostdinc])
 
 AM_SILENT_RULES([yes])
@@ -57,7 +58,8 @@ AC_CONFIG_HEADERS([src/config.h:src/config.in.h])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
-  src/io/Makefile
+  src/kripkeparse/Makefile
+  src/ctlparse/Makefile
   tests/Makefile
 ])
 

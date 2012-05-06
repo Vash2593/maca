@@ -4,7 +4,7 @@
 #include <string>
 #include <cassert>
 #include <iostream>
-#include <io/ctl.hh> // Lol
+#include <kripkeparse/kripke.hh>
 #include <boost/lexical_cast.hpp>
 
 #define LINE(Line)				\
@@ -17,7 +17,7 @@
   yylloc->columns(yyleng);
 
 #define TOK(Token)                              \
-  ctl::parser::token::Token
+  kripke::parser::token::Token
 
 %}
 

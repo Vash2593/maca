@@ -1,0 +1,12 @@
+#! /bin/sh
+
+
+cat >test.tst <<EOF
+AG(AG(AG(AG(AND(w1, false)))))
+EOF
+
+./parse_ctl test.tst
+
+rm test.tst
+
+

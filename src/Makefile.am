@@ -1,3 +1,3 @@
 include $(top_srcdir)/build-aux/make/init.mk
 
-SUBDIRS = io
+SUBDIRS = kripkeparse ctlparse

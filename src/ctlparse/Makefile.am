@@ -12,40 +12,18 @@ BISONXXFLAGS =					\
 AM_BISONFLAGS =					\
   -Wall -Werror --report=all
 
-SOURCES_PARSE_KRIPKE =				\
+SOURCES_PARSE_CTL =				\
   position.hh					\
   location.hh					\
-  kripke.hh					\
-  kripke.cc
-
-SOURCES_PARSE_CTL =				\
   ctl.hh					\
   ctl.cc
 
-BUILT_SOURCES += $(SOURCES_PARSE_KRIPKE) 	\
+BUILT_SOURCES +=				\
   $(SOURCES_PARSE_CTL)
 
 EXTRA_DIST +=					\
-  kripke.yy					\
-  kripke.stamp					\
   ctl.yy					\
   ctl.stamp
-
-kripke.stamp: kripke.yy $(BISONXX_IN)
-	$(AM_V_GEN)mkdir -p $(@D)
-	$(AM_V_at)rm -f $@ $@.tmp
-	$(AM_V_at)echo '$@ rebuilt because of: $?' >$@.tmp
-	$(AM_V_at)$(MAKE) $(BISONXX)
-	$(AM_V_at)$(BISONXX) $(BISONXXFLAGS) --	\
-	  $< $(srcdir)/kripke.cc		\
-	  $(AM_BISONFLAGS) $(BISONFLAGS)
-	$(AM_V_at)mv -f $@.tmp $@
-$(addprefix $(srcdir)/, $(SOURCES_PARSE_KRIPKE)): kripke.stamp
-	@if test -f $@; then :; else		\
-	  rm -f $<;				\
-	  $(MAKE) $(AM_MAKEFLAGS) $<;		\
-	fi
-
 
 ctl.stamp: ctl.yy $(BISONXX_IN)
 	$(AM_V_GEN)mkdir -p $(@D)
@@ -65,28 +43,21 @@ $(addprefix $(srcdir)/, $(SOURCES_PARSE_CTL)): ctl.stamp
 
 
 
-pkglib_LTLIBRARIES = libkripke.la
-libkripke_la_SOURCES = 				\
-  $(SOURCES_PARSE_KRIPKE)			\
-  kripke-lexer.ll
-
-
 pkglib_LTLIBRARIES = libctl.la
 libctl_la_SOURCES = 				\
-  $(SOURCES_PARSE_CTL)				\
+  $(SOURCES_PARSE_CTL)			\
   ctl-lexer.ll
 
 
-
 MAINTAINERCLEANFILES +=				\
-  kripke.dir					\
-  kripke.stamp					\
-  kripke.hh.bak					\
+  ctl.dir					\
+  ctl.stamp					\
+  ctl.hh.bak					\
   location.hh.bak				\
   position.hh.bak				\
   stack.hh.bak					\
   position.hh					\
   stack.hh					\
-  kripke.output					\
-  kripke.xml					\
-  kripke.html
+  ctl.output					\
+  ctl.xml					\
+  ctl.html
