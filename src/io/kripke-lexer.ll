@@ -44,7 +44,7 @@ eol     (\n|\n\r|\r\n)
   {digit}       {
     try
       {
-        yylval->uval = boost::lexical_cast<value_t>(yytext);
+        yylval->uval = boost::lexical_cast<unsigned int>(yytext);
       }
     catch (std::bad_cast& e)
       {
