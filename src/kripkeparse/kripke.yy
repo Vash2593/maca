@@ -15,6 +15,7 @@
   #include <iostream>
   #include <string>
   #include "location.hh"
+  #include "driver.hh"
 
   namespace kripke
   {
@@ -32,13 +33,18 @@
   #define YY_DECL                                       \
     int                                                 \
     kripke::lex(kripke::parser::semantic_type* yylval,  \
-                kripke::parser::location_type* yylloc)
+                kripke::parser::location_type* yylloc,  \
+                kripke::driver& driver_)
   namespace kripke
   {
     int lex(parser::semantic_type* yylval,
-            parser::location_type* yylloc);
+            parser::location_type* yylloc,
+            kripke::driver& driver_);
   } // namespace kripke
 }
+
+%parse-param { driver& driver_ }
+%lex-param   { driver& driver_ }
 
 %token EOL "eol"
        NEG "!"

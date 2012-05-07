@@ -17,14 +17,16 @@ SOURCES_PARSE_KRIPKE =				\
   location.hh					\
   stack.hh					\
   kripke.hh					\
-  kripke.cc
+  kripke.cc					\
+  driver.cc
 
 BUILT_SOURCES += $(SOURCES_PARSE_KRIPKE) 	\
   $(SOURCES_PARSE_CTL)
 
 EXTRA_DIST +=					\
   kripke.yy					\
-  kripke.stamp
+  kripke.stamp					\
+  driver.hh
 
 kripke.stamp: kripke.yy $(BISONXX_IN)
 	$(AM_V_GEN)mkdir -p $(@D)
