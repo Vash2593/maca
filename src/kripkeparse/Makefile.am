@@ -46,14 +46,10 @@ $(addprefix $(srcdir)/, $(SOURCES_PARSE_KRIPKE)): kripke.stamp
 	  $(MAKE) $(AM_MAKEFLAGS) $<;		\
 	fi
 
-
-
-
 pkglib_LTLIBRARIES = libkripke.la
 libkripke_la_SOURCES = 				\
   $(SOURCES_PARSE_KRIPKE)			\
   kripke-lexer.ll
-
 
 MAINTAINERCLEANFILES +=				\
   kripke.dir					\
@@ -67,3 +63,6 @@ MAINTAINERCLEANFILES +=				\
   kripke.output					\
   kripke.xml					\
   kripke.html
+
+CLEANFILES =					\
+  kripke.dir
