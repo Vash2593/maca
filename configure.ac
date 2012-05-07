@@ -1,9 +1,10 @@
 # -*- mode: autoconf -*-
 AC_PREREQ([2.61])
 
-AC_INIT([Fixme], [0.1], [moreira@lrde.epita.fr]) # FIXME: Define it when create the project
-AC_CONFIG_AUX_DIR([build-aux]) # FIXME: add build-aux
-AC_CONFIG_MACRO_DIR([build-aux/m4]) # FIXME: add build-aux
+# Congratulation this project has reach the version number `moreir_a'.
+AC_INIT([Model-Checking], [moreir_a], [moreira@lrde.epita.fr], [badie_t])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([build-aux/m4])
 
 AM_INIT_AUTOMAKE([1.11 tar-ustar no-define foreign dist-xz
                   color-tests
