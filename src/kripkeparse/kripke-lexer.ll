@@ -40,7 +40,7 @@ eol     (\n|\n\r|\r\n)
 
   "!"           return TOK(NEG);
 
-  {eol}         return TOK(EOL);
+  {eol}         LINE(1); return TOK(EOL);
 
   {digit}       {
     try
@@ -58,7 +58,6 @@ eol     (\n|\n\r|\r\n)
   {id}          yylval->sval = new std::string(yytext); return TOK(ID);
 
 }
-
 
 %%
 
@@ -87,7 +86,6 @@ namespace kripke
       yypop_buffer_state();
     }
 } // namespace kripke
-
 
 // Local Variables:
 // mode: C++

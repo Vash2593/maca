@@ -1,9 +1,13 @@
 #include <cstring>
+#include <string>
 #include "driver.hh"
 #include "kripke.hh"
 
 namespace kripke
 {
+  driver::driver()
+  {}
+
   int driver::parse_file(const std::string& f) {
     FILE* yyin = f == "-" ? stdin : fopen(f.c_str(), "r");
     if (!yyin)

@@ -59,12 +59,12 @@
 %%
 
 file:
-  DIGIT EOL states
+DIGIT EOL states EOL // FIXME: EOL?
 ;
 
 states:
   state
-| states state EOL
+| states EOL state
 ;
 
 state:
@@ -79,5 +79,16 @@ rules:
 
 next:
 /* empty */
-| ID next
+| next DIGIT
 ;
+
+%%
+namespace kripke
+{
+  void
+  parser::error (const location_type& l, const std::string& m)
+  {
+    std::cerr << l << ": " << m << std::endl;
+  }
+
+} // namespace kripke

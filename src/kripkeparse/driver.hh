@@ -2,6 +2,7 @@
 # define MACA_IO_DRIVER_HH
 
 # include <sstream>
+# include <string>
 # include "location.hh"
 
 namespace kripke
