@@ -6,7 +6,7 @@
 #include <iostream>
 #include <kripkeparse/kripke.hh>
 #include <boost/lexical_cast.hpp>
-#include "driver.hh"
+#include <kripkeparse/driver.hh>
 
 #define LINE(Line)				\
   do{						\

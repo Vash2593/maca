@@ -1,6 +1,8 @@
 include $(top_srcdir)/build-aux/make/init.mk
 
 AM_CPPFLAGS += -I$(srcdir)/..
+AM_LDFLAGS += -lbdd
+
 
 BISONXX = $(top_builddir)/build-aux/bin/bison++
 BISONXX_IN = $(top_srcdir)/build-aux/bin/bison++.in
