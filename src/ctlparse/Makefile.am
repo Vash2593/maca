@@ -15,6 +15,8 @@ AM_BISONFLAGS =					\
 SOURCES_PARSE_CTL =				\
   position.hh					\
   location.hh					\
+  stack.hh					\
+  ctl-public.hh					\
   ctl.hh					\
   ctl.cc
 

@@ -15,6 +15,7 @@ AM_BISONFLAGS =					\
 SOURCES_PARSE_KRIPKE =				\
   position.hh					\
   location.hh					\
+  stack.hh					\
   kripke.hh					\
   kripke.cc
 
