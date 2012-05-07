@@ -22,6 +22,9 @@
     {
       unsigned uval;
       std::string* sval;
+      enum keyword_kind { AND, OR, NOT, IMPLIES,
+                          AX, EX, AF, EF, AG, EG, AU, EU };
+
     };
   } // namespace ctl
 #define YYSTYPE ctl::sem_type
@@ -58,6 +61,9 @@
 %token <uval> DIGIT "digit"
 ;
 
+%token <uval> KEYWORD "keyword"
+;
+
 %token <sval> ID "id"
 ;
 
@@ -75,10 +81,10 @@ exp:
 ;
 
 fun_call:
-"id" "(" args ")" { std::cout << "fun_call: " << *$1 << std::endl; }
+"keyword" "(" args ")" { std::cout << "fun_call: " << $1 << std::endl; }
 ;
 
-// One or more 'exp, ...'
+// 'exp[, exp]*'
 args:
   exp
 | args "," exp
@@ -88,6 +94,9 @@ term:
 "id"            { std::cout << "term - id: " << *$1 << std::endl; }
 | "true"        { std::cout << "term - true" << std::endl; }
 | "false"       { std::cout << "term - false" << std::endl; }
+| "!" "id"      { std::cout << "term - not id: " << *$2 << std::endl; }
+| "!" "true"    { std::cout << "term - not true" << std::endl; }
+| "!" "false"   { std::cout << "term - not false" << std::endl; }
 ;
 
 
@@ -98,6 +107,7 @@ namespace ctl
   void
   parser::error (const location_type& l, const std::string& m)
   {
+    std::cerr << l << ": " << m << std::endl;
   }
 
 

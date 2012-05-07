@@ -1,4 +1,4 @@
-%option noyywrap nounput debug
+%option noyywrap nounput
 
 %{
 #include <string>
@@ -19,6 +19,10 @@
 #define TOK(Token)                              \
   ctl::parser::token::Token
 
+#define DEC_KEYWORD(QKind, Kind)                \
+QKind yylval->uval = Kind; return TOK(KEYWORD)
+
+
 %}
 
 id      ([a-zA-Z0-9]+)
@@ -30,17 +34,32 @@ eol     (\n|\n\r|\r\n|\r)
 %{
   unsigned open_brace = 0;
   std::string *sval = 0;
-  unsigned int ival = 0;
+  unsigned int uval = 0;
+  enum keyword_kind { AND, OR, NOT, IMPLIES,
+                      AX, EX, AF, EF, AG, EG, AU, EU };
 
   yylloc->step();
 %}
 
-"!"           return TOK(NEG);
-"("           return TOK(LPAREN);
-")"           return TOK(RPAREN);
-","           return TOK(COMMA);
-"true"        return TOK(TRUE);
-"false"       return TOK(FALSE);
+"!"             return TOK(NEG);
+"("             return TOK(LPAREN);
+")"             return TOK(RPAREN);
+","             return TOK(COMMA);
+"true"          return TOK(TRUE);
+"false"         return TOK(FALSE);
+"AND"           yylval->uval = AND; return TOK(KEYWORD);
+"OR"            yylval->uval = OR; return TOK(KEYWORD);
+"NOT"           yylval->uval = NOT; return TOK(KEYWORD);
+"IMPLIES"       yylval->uval = IMPLIES; return TOK(KEYWORD);
+"AX"            yylval->uval = AX; return TOK(KEYWORD);
+"EX"            yylval->uval = EX; return TOK(KEYWORD);
+"AF"            yylval->uval = AF; return TOK(KEYWORD);
+"EF"            yylval->uval = EF; return TOK(KEYWORD);
+"AG"            yylval->uval = AG; return TOK(KEYWORD);
+"EG"            yylval->uval = EG; return TOK(KEYWORD);
+"AU"            yylval->uval = AU; return TOK(KEYWORD);
+"EU"            yylval->uval = EU; return TOK(KEYWORD);
+
 
 {eol}         LINE();
 

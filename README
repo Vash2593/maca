@@ -4,3 +4,22 @@
 
   The rules of our Makefile about flex and bison are highly inspired
   of the [[http://lrde.epita.fr/cgi-bin/twiki/view/Vaucanson/Vaucanson][Vaucanson]]'s Makefiles.
+
+* Lexing and Parsing
+
+** CTL
+
+   We follow the rules given by the subject nearly exactly. We allow
+   some syntactic sugar with the "NOT". Our parser currently support
+   an expression like `!w1' instead of NOT(w1) which is quite heavy
+   for our needs (we save 4 characters !).
+
+   In our implementation, we consider AX, EX and all their equivalents
+   like keyword of this language. It allows a cleaner method to parse,
+   because the distinction between is done only in the lexer, and in the
+   parser we just have to use a switch to call the right function.
+
+   We also consider an infinite arity in the parser, and we just pass
+   a list of argument to the method. Each method is responsible of the
+   number of argument they receive, and must print an error if this
+   number is wrong.
