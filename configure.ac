@@ -53,6 +53,17 @@ TC_PROG([bison], [>= 2.4], [BISON], [Bison parser generator])
 AC_CONFIG_FILES([build-aux/bin/bison++], [chmod +x build-aux/bin/bison++])
 AC_CONFIG_HEADERS([src/config.h:src/config.in.h])
 
+# Now let's work with BuDDy...
+AC_CHECK_LIB([bdd], [bdd_setcacheratio],
+              [bdd_found=yes ],
+	      [bdd_found=no])
+
+if test x${bdd_found} = xno; then
+   AC_MSG_ERROR([Could not link with BuDDy. Please install it.])
+fi
+
+
+
 ## ------------------ ##
 ## Generated Makefile ##
 ## ------------------ ##
