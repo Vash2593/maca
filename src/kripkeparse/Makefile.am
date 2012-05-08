@@ -19,15 +19,16 @@ SOURCES_PARSE_KRIPKE =				\
   location.hh					\
   stack.hh					\
   kripke.hh					\
-  kripke.cc					\
-  driver.cc
+  kripke.cc
 
-BUILT_SOURCES += $(SOURCES_PARSE_KRIPKE) 	\
-  $(SOURCES_PARSE_CTL)
+BUILT_SOURCES +=				\
+  $(SOURCES_PARSE_KRIPKE)
+
 
 EXTRA_DIST +=					\
   kripke.yy					\
   kripke.stamp					\
+  driver.cc					\
   driver.hh
 
 kripke.stamp: kripke.yy $(BISONXX_IN)

@@ -17,7 +17,6 @@ SOURCES_PARSE_CTL =				\
   position.hh					\
   location.hh					\
   stack.hh					\
-  ctl-public.hh					\
   ctl.hh					\
   ctl.cc
 
@@ -26,6 +25,7 @@ BUILT_SOURCES +=				\
 
 EXTRA_DIST +=					\
   ctl.yy					\
+  ctl-public.hh					\
   ctl.stamp
 
 ctl.stamp: ctl.yy $(BISONXX_IN)
