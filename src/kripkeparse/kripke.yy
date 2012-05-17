@@ -59,7 +59,12 @@
 %%
 
 file:
-DIGIT EOL states EOL // FIXME: EOL?
+DIGIT EOL states eol
+
+
+eol:
+
+| EOL
 ;
 
 states:
