@@ -57,8 +57,10 @@ eol     (\n|\n\r|\r\n)
 
   {id}          yylval->sval = new std::string(yytext); return TOK(ID);
 
-}
+  " "|"\t"      continue;
 
+  . driver_.invalid(*yylloc, yytext);
+}
 %%
 
 namespace kripke
