@@ -8,12 +8,13 @@ namespace kripke
   driver::driver()
   {}
 
-  int driver::parse_file(const std::string& f) {
+  int
+  driver::parse_file(const std::string& f)
+  {
     FILE* yyin = f == "-" ? stdin : fopen(f.c_str(), "r");
     if (!yyin)
       {
-        std::cerr << f << ": cannot open: " << strerror(errno)
-                  << std::endl;
+        std::cerr << f << ": cannot open: " << strerror(errno) << std::endl;
         exit(1);
       }
     scan_open(yyin);
@@ -23,20 +24,28 @@ namespace kripke
     return res;
   }
 
-  int driver::parse_string(const std::string& e, const location& l) {
+  int
+  driver::parse_string(const std::string& e, const location& l)
+  {
     scan_open(e);
     return parse();
   }
 
-  void driver::error(const location& l, const std::string& m) {
-    std::cerr << l << ':' << m << std::endl;
+  void
+  driver::error(const location& l, const std::string& m)
+  {
+    std::cerr << l << ": " << m << std::endl;
   }
 
-  void driver::invalid(const location& l, const std::string& s) {
+  void
+  driver::invalid(const location& l, const std::string& s)
+  {
     error(l, "invalid character: " + s);
   }
 
-  int driver::parse(const location& l) {
+  int
+  driver::parse(const location& l)
+  {
     parser p(*this);
     p.set_debug_level(!!getenv("YYDEBUG"));
     location_ = l;

@@ -1,5 +1,5 @@
-#ifndef MACA_IO_DRIVER_HH
-# define MACA_IO_DRIVER_HH
+#ifndef MACA_KRIPKEPARSE_DRIVER_HH
+# define MACA_KRIPKEPARSE_DRIVER_HH
 
 # include <sstream>
 # include <string>
@@ -28,4 +28,4 @@ namespace kripke
   };
 } // namespace kripke
 
-#endif // !MACA_IO_DRIVER_HH
+#endif // !MACA_KRIPKEPARSE_DRIVER_HH
