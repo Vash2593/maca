@@ -19,7 +19,8 @@ SOURCES_PARSE_KRIPKE =				\
   location.hh					\
   stack.hh					\
   kripke.hh					\
-  kripke.cc
+  kripke.cc					\
+  driver.cc
 
 BUILT_SOURCES +=				\
   $(SOURCES_PARSE_KRIPKE)
