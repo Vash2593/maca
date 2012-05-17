@@ -64,5 +64,6 @@ MAINTAINERCLEANFILES +=				\
   ctl.output					\
   ctl.xml					\
   ctl.html
-CLEANFILES =					\
+
+CLEANFILES +=					\
   ctl.dir

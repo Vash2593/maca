@@ -64,5 +64,5 @@ MAINTAINERCLEANFILES +=				\
   kripke.xml					\
   kripke.html
 
-CLEANFILES =					\
+CLEANFILES +=					\
   kripke.dir
