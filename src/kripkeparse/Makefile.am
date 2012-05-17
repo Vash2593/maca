@@ -28,7 +28,6 @@ BUILT_SOURCES +=				\
 EXTRA_DIST +=					\
   kripke.yy					\
   kripke.stamp					\
-  driver.cc					\
   driver.hh
 
 kripke.stamp: kripke.yy $(BISONXX_IN)
@@ -52,7 +51,6 @@ libkripke_la_SOURCES = 				\
   kripke-lexer.ll
 
 MAINTAINERCLEANFILES +=				\
-  kripke.dir					\
   kripke.stamp					\
   kripke.hh.bak					\
   location.hh.bak				\

@@ -53,7 +53,6 @@ libctl_la_SOURCES = 				\
 
 
 MAINTAINERCLEANFILES +=				\
-  ctl.dir					\
   ctl.stamp					\
   ctl.hh.bak					\
   location.hh.bak				\

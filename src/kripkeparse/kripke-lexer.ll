@@ -59,7 +59,7 @@ eol     (\n|\n\r|\r\n)
 
   " "|"\t"      continue;
 
-  . driver_.invalid(*yylloc, yytext);
+  .             driver_.invalid(*yylloc, yytext);
 }
 %%
 
