@@ -23,3 +23,4 @@
    a list of argument to the method. Each method is responsible of the
    number of argument they receive, and must print an error if this
    number is wrong.
+* bdd_load/bdd_save
