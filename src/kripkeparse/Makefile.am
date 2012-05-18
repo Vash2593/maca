@@ -15,15 +15,18 @@ AM_BISONFLAGS =					\
   -Wall -Werror --report=all
 
 SOURCES_PARSE_KRIPKE =				\
+  $(PARSE_KRIPKE_BUILT)				\
+  driver.cc
+
+PARSE_KRIPKE_BUILT =				\
   position.hh					\
   location.hh					\
   stack.hh					\
   kripke.hh					\
-  kripke.cc					\
-  driver.cc
+  kripke.cc
 
 BUILT_SOURCES +=				\
-  $(SOURCES_PARSE_KRIPKE)
+  $(PARSE_KRIPKE_BUILT)
 
 
 EXTRA_DIST +=					\
