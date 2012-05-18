@@ -1,1 +1,14 @@
- ./parse_kripke kripke.kr
+#! /bin/sh
+
+cat >kripke.kr <<EOF
+3
+0 x w
+  1 2
+1 x !w
+  2 0
+2 !x w
+  1
+EOF
+
+./parse_kripke kripke.kr
+rm kripke.kr
