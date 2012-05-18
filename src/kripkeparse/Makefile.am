@@ -1,6 +1,6 @@
 include $(top_srcdir)/build-aux/make/init.mk
 
-AM_CPPFLAGS += -I$(srcdir)/..
+AM_CPPFLAGS += -I$(srcdir)/.. -I/usr/local/include
 AM_LDFLAGS += -lbdd
 
 
