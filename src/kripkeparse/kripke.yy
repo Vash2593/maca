@@ -30,11 +30,10 @@
 
 %code provides
 {
-  #define YY_DECL                                       \
-    int                                                 \
-    kripke::lex(kripke::parser::semantic_type* yylval,  \
-                kripke::parser::location_type* yylloc,  \
-                kripke::driver& driver_)
+#define YY_DECL                                             \
+  int kripke::lex(kripke::parser::semantic_type* yylval,    \
+                  kripke::parser::location_type* yylloc,    \
+                  kripke::driver& driver_)
   namespace kripke
   {
     int lex(parser::semantic_type* yylval,
@@ -54,16 +53,17 @@
 %token <sval> ID "id"
 ;
 
+
 %start file
 
 %%
 
 file:
-DIGIT EOL states eol
+DIGIT EOL states eolf
 
 
-eol:
-
+eolf:
+/* empty */
 | EOL
 ;
 
