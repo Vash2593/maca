@@ -18,13 +18,15 @@
 
   namespace ctl
   {
+    enum keyword_kind { AND, OR, NOT, IMPLIES,
+                        AX, EX, AF, EF, AG, EG, AU, EU };
+
+
     struct sem_type
     {
-      unsigned uval;
-      std::string* sval;
-      enum keyword_kind { AND, OR, NOT, IMPLIES,
-                          AX, EX, AF, EF, AG, EG, AU, EU };
-
+        unsigned uval;
+        std::string sval;
+        keyword_kind kval;
     };
   } // namespace ctl
 #define YYSTYPE ctl::sem_type
@@ -44,8 +46,6 @@
 
     int ctlyyopen(const std::string &name);
     void ctlyyclose();
-
-
   } // namespace ctl
 
 
@@ -61,11 +61,14 @@
 %token <uval> DIGIT "digit"
 ;
 
-%token <uval> KEYWORD "keyword"
+%token <kval> KEYWORD "keyword"
 ;
 
 %token <sval> ID "id"
 ;
+
+
+%printer { debug_stream() << $$;  } <sval> <kval>;
 
 %start file
 
@@ -91,12 +94,9 @@ args:
 ;
 
 term:
-"id"            { std::cout << "term - id: " << *$1 << std::endl; }
-| "true"        { std::cout << "term - true" << std::endl; }
-| "false"       { std::cout << "term - false" << std::endl; }
-| "!" "id"      { std::cout << "term - not id: " << *$2 << std::endl; }
-| "!" "true"    { std::cout << "term - not true" << std::endl; }
-| "!" "false"   { std::cout << "term - not false" << std::endl; }
+"id"
+| "true"
+| "false"
 ;
 
 
@@ -122,7 +122,7 @@ namespace ctl
     }
 
     parser p;
-    p.set_debug_level(false);
+    p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
     ctlyyclose();
 

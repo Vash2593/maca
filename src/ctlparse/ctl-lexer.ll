@@ -76,7 +76,7 @@ eol     (\n|\n\r|\r\n|\r)
   return TOK(DIGIT);
 }
 
-{id}          yylval->sval = new std::string(yytext); return TOK(ID);
+{id}          yylval->sval = yytext; return TOK(ID);
 
 
 %%
