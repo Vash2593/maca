@@ -3,6 +3,8 @@
 
 # include <sstream>
 # include <string>
+# include <istream>
+# include <bdd.h>
 # include "location.hh"
 
 namespace kripke
@@ -11,12 +13,16 @@ namespace kripke
   {
   public:
     driver();
-    int parse_file(const std::string& f);
-    int parse_string(const std::string& e, const location& l = location());
+    int parse_file(const std::string& f, bdd states, bdd transitions);
+    int parse_string(const std::string& e,
+                     bdd states,
+                     bdd transitions,
+                     const location& l = location());
+    int parse_stream(FILE* s, bool stdin, bdd states, bdd transitions);
 
     void error(const location& l, const std::string& m);
     void invalid(const location& l, const std::string& s);
-    int parse(const location& l = location());
+    int parse(bdd states, bdd transition, const location& l = location());
 
     int result_;
   private:

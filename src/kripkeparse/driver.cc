@@ -9,7 +9,7 @@ namespace kripke
   {}
 
   int
-  driver::parse_file(const std::string& f)
+  driver::parse_file(const std::string& f, bdd states, bdd transitions)
   {
     FILE* yyin = f == "-" ? stdin : fopen(f.c_str(), "r");
     if (!yyin)
@@ -18,17 +18,17 @@ namespace kripke
         exit(1);
       }
     scan_open(yyin);
-    int res = parse();
+    int res = parse(states, transitions);
     if (f != "-")
       fclose(yyin);
     return res;
   }
 
   int
-  driver::parse_string(const std::string& e, const location& l)
+  driver::parse_string(const std::string& e, bdd states, bdd transitions, const location& l)
   {
     scan_open(e);
-    return parse();
+    return parse(states, transitions);
   }
 
   void
@@ -44,9 +44,9 @@ namespace kripke
   }
 
   int
-  driver::parse(const location& l)
+  driver::parse(bdd states, bdd transitions, const location& l)
   {
-    parser p(*this);
+    parser p(*this, states, transitions);
     p.set_debug_level(!!getenv("YYDEBUG"));
     location_ = l;
     if (p.parse())

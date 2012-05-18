@@ -14,8 +14,13 @@
 {
   #include <iostream>
   #include <string>
+  #include <list>
+
+  #include <bdd.h>
   #include "location.hh"
   #include "driver.hh"
+
+  typedef std::list<unsigned> node_list;
 
   namespace kripke
   {
@@ -23,6 +28,7 @@
     {
       unsigned uval;
       std::string* sval;
+      node_list unext;
     };
   } // namespace kripke
 #define YYSTYPE kripke::sem_type
@@ -43,6 +49,8 @@
 }
 
 %parse-param { driver& driver_ }
+%parse-param { bdd& states_ }
+%parse-param { bdd& transitions_ }
 %lex-param   { driver& driver_ }
 
 %token EOL "eol"
