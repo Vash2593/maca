@@ -1,5 +1,6 @@
 /aclocal.m4
 /autom4te.cache/*
+/_build/*
 /build-aux
 /config.log
 /config.status
@@ -26,6 +27,8 @@
 /src/kripkeparse/location.hh
 /src/kripkeparse/position.hh
 /src/kripkeparse/stack.hh
+/src/.libs/*
+/src/maca
 /tests/.libs/*
 /tests/parse_ctl
 /tests/parse_kripke
