@@ -1,21 +1,16 @@
 
 AM_CPPFLAGS = -I$(srcdir)/../src
-LDADD = $(top_builddir)/src/ctlparse/libctl.la \
-  $(top_builddir)/src/kripkeparse/libkripke.la
+LDADD = $(top_builddir)/src/ctlparse/libctl.la
+
 
 parse_ctl_SOURCES =			\
-  parse-ctl.cc
-
-parse_kripke_SOURCES =			\
-  parse-kripke.cc
+  parse-ctl.ccx
 
 check_PROGRAMS =			\
-  parse_ctl				\
-  parse_kripke
+  parse_ctl
 
 TESTS =					\
-  parse-ctl.test			\
-  parse-kripke.test
+  parse-ctl.test
 
 EXTRA_DIST = $(TESTS)
 
