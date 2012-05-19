@@ -11,7 +11,9 @@ class parse
   typedef std::vector<bdd> vbdd;
 
 public:
-  parse()
+  parse(bdd& states, bdd& transitions)
+    : states_(states)
+    , transitions_(transitions)
   {
     bdd_init(1000000, 10000);
     bdd_setvarnum(1000);
@@ -34,18 +36,17 @@ public:
           {
             --j;
             if (decu & 1)
-                new_source &= bdd_ithvar(j);
+              new_source &= bdd_ithvar(j);
             else
-                new_source &= !bdd_ithvar(j);
+              new_source &= !bdd_ithvar(j);
           }
         source[i] = new_source;
         destination[i] = bdd_replace(new_source, pair);
       }
-    bdd states = bddfalse;
-    bdd transitions = bddfalse;
-    kripke::driver d(states, transitions, source, destination);
+    kripke::driver d(states_, transitions_, source, destination);
     return d.parse_file(str);
   }
+
 private:
   bddPair* get_pair(unsigned bits_need)
   {
@@ -74,13 +75,16 @@ private:
   {
     return (unsigned int) std::ceil(std::log2(size));
   }
-
 private:
+  bdd states_;
+  bdd transitions_;
 };
 
 int main(int argc, char** argv)
 {
   assert(argc == 2);
-  parse k;
+  bdd states;
+  bdd transitions;
+  parse k(states, transitions);
   k.parse_bdd(std::string(argv[1]));
 }
