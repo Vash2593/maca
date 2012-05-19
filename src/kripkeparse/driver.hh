@@ -4,6 +4,7 @@
 # include <sstream>
 # include <string>
 # include <istream>
+# include <map>
 # include <bdd.h>
 # include "location.hh"
 
@@ -15,7 +16,9 @@ namespace kripke
     driver(bdd states,
            bdd transitions,
            const std::vector<bdd>& sources,
-           const std::vector<bdd>& destinations);
+           const std::vector<bdd>& destinations,
+           std::map<std::string, int> id_map,
+           const unsigned nb_states);
     int parse_file(const std::string& f);
     int parse_string(const std::string& e, const location& l = location());
     int parse_stream(FILE* s, bool stdin);
@@ -31,7 +34,9 @@ namespace kripke
     bdd transitions_;
     const std::vector<bdd>& sources_;
     const std::vector<bdd>& destinations_;
-      private:
+    std::map<std::string, int> id_map_;
+    const unsigned nb_states_;
+  private:
     void scan_open(FILE* f);
     void scan_open(const std::string& e);
     void scan_close();

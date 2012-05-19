@@ -16,7 +16,7 @@ public:
     , transitions_(transitions)
   {
     bdd_init(1000000, 10000);
-    bdd_setvarnum(1000);
+    bdd_setvarnum(10000);
   }
 
   int parse_bdd(std::string str)
@@ -40,10 +40,10 @@ public:
             else
               new_source &= !bdd_ithvar(j);
           }
-        source[i] = new_source;
-        destination[i] = bdd_replace(new_source, pair);
+        source.push_back(new_source);
+        destination.push_back(bdd_replace(new_source, pair));
       }
-    kripke::driver d(states_, transitions_, source, destination);
+    kripke::driver d(states_, transitions_, source, destination, id_map_, bits_need);
     return d.parse_file(str);
   }
 
@@ -52,7 +52,7 @@ private:
   {
     bddPair* pair = bdd_newpair();
     for (unsigned j = 0; j < bits_need; ++j)
-      if (!bdd_setpair(pair, j, j + bits_need))
+      if (bdd_setpair(pair, j, j + bits_need))
         assert(false);
     return pair;
   }
@@ -76,6 +76,7 @@ private:
     return (unsigned int) std::ceil(std::log2(size));
   }
 private:
+  std::map<std::string, int> id_map_;
   bdd states_;
   bdd transitions_;
 };

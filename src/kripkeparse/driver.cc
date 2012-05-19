@@ -8,11 +8,15 @@ namespace kripke
   driver::driver(bdd states,
                  bdd transitions,
                  const std::vector<bdd>& sources,
-                 const std::vector<bdd>& destinations)
+                 const std::vector<bdd>& destinations,
+                 std::map<std::string, int> id_map,
+                 const unsigned nb_states)
     : states_(states)
     , transitions_(transitions)
     , sources_(sources)
     , destinations_(destinations)
+    , id_map_(id_map)
+    , nb_states_(nb_states)
   {}
 
   int
@@ -53,7 +57,12 @@ namespace kripke
   int
   driver::parse(const location& l)
   {
-    parser p(*this, states_, transitions_, sources_, destinations_);
+    parser p(*this, states_,
+             transitions_,
+             sources_,
+             destinations_,
+             id_map_,
+             nb_states_);
     p.set_debug_level(!!getenv("YYDEBUG"));
     location_ = l;
     if (p.parse())
