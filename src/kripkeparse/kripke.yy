@@ -51,6 +51,8 @@
 %parse-param { driver& driver_ }
 %parse-param { bdd& states_ }
 %parse-param { bdd& transitions_ }
+%parse-param { std::vector<bdd> sources_ }
+%parse-param { std::vector<bdd> destinations_ }
 %lex-param   { driver& driver_ }
 
 %token EOL "eol"

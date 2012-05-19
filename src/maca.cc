@@ -8,10 +8,10 @@
 
 class parse
 {
+  typedef std::vector<bdd> vbdd;
+
 public:
   parse()
-    : states_(bddfalse)
-    , transition_(bddfalse)
   {
     bdd_init(1000000, 10000);
     bdd_setvarnum(1000);
@@ -19,15 +19,13 @@ public:
 
   int parse_bdd(std::string str)
   {
-    kripke::driver d;
-
     const unsigned size = get_size(str);
     const unsigned bits_need = get_bits_need(size);
 
     bddPair* pair = get_pair(bits_need);
 
-    std::vector<bdd> source;
-    std::vector<bdd> destination;
+    vbdd source;
+    vbdd destination;
     for (unsigned i = 0; i < size; ++i)
       {
         bdd new_source = bddtrue;
@@ -43,22 +41,25 @@ public:
         source[i] = new_source;
         destination[i] = bdd_replace(new_source, pair);
       }
-    return d.parse_file(str, states_, transition_);
+    bdd states = bddfalse;
+    bdd transitions = bddfalse;
+    kripke::driver d(states, transitions, source, destination);
+    return d.parse_file(str);
   }
 private:
   bddPair* get_pair(unsigned bits_need)
   {
-    // Create the pair
     bddPair* pair = bdd_newpair();
     for (unsigned j = 0; j < bits_need; ++j)
       if (!bdd_setpair(pair, j, j + bits_need))
         assert(false);
     return pair;
   }
+
   unsigned get_size(std::string& str)
   {
     if (str == "-")
-      assert(!!false);
+      assert(!"Can not read input stream");
     unsigned int size;
 
     std::ifstream i;
@@ -68,13 +69,13 @@ private:
 
     return size;
   }
+
   unsigned get_bits_need(unsigned size)
   {
     return (unsigned int) std::ceil(std::log2(size));
   }
+
 private:
-  bdd states_;
-  bdd transition_;
 };
 
 int main(int argc, char** argv)
