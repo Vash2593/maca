@@ -28,7 +28,7 @@
     {
       unsigned uval;
       std::string* sval;
-      node_list unext;
+      node_list* unext;
     };
   } // namespace kripke
 #define YYSTYPE kripke::sem_type
@@ -63,6 +63,7 @@
 %token <sval> ID "id"
 ;
 
+%type <unext> next;
 
 %start file
 
@@ -83,7 +84,12 @@ states:
 ;
 
 state:
-DIGIT rules EOL next
+DIGIT rules EOL next    {
+  bdd& source = sources_[$1];
+  for(auto n : $4)
+    states_ |= source & destinations_[n];
+  delete $4
+}
 ;
 
 rules:
@@ -93,8 +99,8 @@ rules:
 ;
 
 next:
-/* empty */
-| next DIGIT
+/* empty */             { $$ = new node_list(); }
+| next DIGIT            { $$ = $1; $$->push_back($2); }
 ;
 
 %%
