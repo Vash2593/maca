@@ -4,7 +4,7 @@ LDADD = $(top_builddir)/src/ctlparse/libctl.la
 
 
 parse_ctl_SOURCES =			\
-  parse-ctl.ccx
+  parse-ctl.cc
 
 check_PROGRAMS =			\
   parse_ctl
