@@ -6,6 +6,8 @@
 
 #include <kripkeparse/driver.hh>
 
+#include <verification/verification.hh>
+
 class parse
 {
   typedef std::vector<bdd> vbdd;
@@ -14,6 +16,9 @@ public:
   parse(bdd& states, bdd& transitions)
     : states_(states)
     , transitions_(transitions)
+    , pred_to_succ_(0)
+    , succ_to_pred_(0)
+    , succs_(bddtrue)
   {
     bdd_init(1000000, 10000);
     bdd_setvarnum(10000);
@@ -24,7 +29,7 @@ public:
     const unsigned size = get_size(str);
     const unsigned bits_need = get_bits_need(size);
 
-    bddPair* pair = get_pair(bits_need);
+    create_pairs(bits_need);
 
     vbdd source;
     vbdd destination;
@@ -41,20 +46,25 @@ public:
               new_source &= !bdd_ithvar(j);
           }
         source.push_back(new_source);
-        destination.push_back(bdd_replace(new_source, pair));
+        destination.push_back(bdd_replace(new_source, pred_to_succ_));
       }
     kripke::driver d(states_, transitions_, source, destination, id_map_, bits_need);
     return d.parse_file(str);
   }
 
 private:
-  bddPair* get_pair(unsigned bits_need)
+  void create_pairs(unsigned bits_need)
   {
-    bddPair* pair = bdd_newpair();
+    pred_to_succ_ = bdd_newpair();
+    succ_to_pred_ = bdd_newpair();
+
     for (unsigned j = 0; j < bits_need; ++j)
-      if (bdd_setpair(pair, j, j + bits_need))
-        assert(false);
-    return pair;
+      {
+        if (bdd_setpair(pred_to_succ_, j, j + bits_need)
+            || bdd_setpair(pred_to_succ_, j + bits_need, j))
+          assert(false);
+        succs_ &= bdd_ithvar(j + bits_need);
+      }
   }
 
   unsigned get_size(std::string& str)
@@ -75,10 +85,14 @@ private:
   {
     return (unsigned int) std::ceil(std::log2(size));
   }
+
 private:
   std::map<std::string, int> id_map_;
   bdd states_;
   bdd transitions_;
+  bddPair* pred_to_succ_;
+  bddPair* succ_to_pred_;
+  bdd succs_;
 };
 
 int main(int argc, char** argv)
