@@ -2,26 +2,28 @@
 # define VERIFICATION_VERIFICATION_HH_
 
 # include <bdd.h>
+# include <parseKripke.hh>
 
 namespace verif
 {
 
+  typedef parseKripke::bddmap bddmap;
+
   template <class RecurType, class Lambda>
   bdd
-  bdd_recursion(Lambda l, bdd prev)
+  bdd_recursion(Lambda l, bdd prev, bdd support)
   {
     bdd res;
     while (true)
       {
         res = RecurType::op(prev, l(prev));
-        if (res != prev)
+        if (res == prev)
           break;
         prev = res;
       }
-    return res;
+    return bdd_exist(res, support);
   }
-
-  struct Incremental
+struct Incremental
   {
     // Incremental recursion for bdd formula. This struct must be pass
     // as template parameters to bdd_recursion.
