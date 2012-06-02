@@ -13,11 +13,11 @@ namespace kripke
   class driver
   {
   public:
-    driver(bdd states,
-           bdd transitions,
+    driver(bdd& states,
+           bdd& transitions,
            const std::vector<bdd>& sources,
            const std::vector<bdd>& destinations,
-           std::map<std::string, int> id_map,
+           std::map<std::string, int>& id_map,
            const unsigned nb_states);
     int parse_file(const std::string& f);
     int parse_string(const std::string& e, const location& l = location());
@@ -30,11 +30,11 @@ namespace kripke
     int result_;
   private:
     location location_;
-    bdd states_;
-    bdd transitions_;
+    bdd& states_;
+    bdd& transitions_;
     const std::vector<bdd>& sources_;
     const std::vector<bdd>& destinations_;
-    std::map<std::string, int> id_map_;
+    std::map<std::string, int>& id_map_;
     const unsigned nb_states_;
   private:
     void scan_open(FILE* f);

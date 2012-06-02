@@ -5,11 +5,11 @@
 
 namespace kripke
 {
-  driver::driver(bdd states,
-                 bdd transitions,
+  driver::driver(bdd& states,
+                 bdd& transitions,
                  const std::vector<bdd>& sources,
                  const std::vector<bdd>& destinations,
-                 std::map<std::string, int> id_map,
+                 std::map<std::string, int>& id_map,
                  const unsigned nb_states)
     : states_(states)
     , transitions_(transitions)
