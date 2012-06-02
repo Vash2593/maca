@@ -57,7 +57,7 @@
 %parse-param { bdd& transitions_ }
 %parse-param { std::vector<bdd> sources_ }
 %parse-param { std::vector<bdd> destinations_ }
-%parse-param { std::map<std::string, int> id_map_ }
+%parse-param { std::map<std::string, int>& id_map_ }
 %parse-param { unsigned int nb_bits_ }
 %lex-param   { driver& driver_ }
 
