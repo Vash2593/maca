@@ -76,8 +76,7 @@
 %%
 
 file:
-DIGIT EOL states eolf   {
-}
+DIGIT EOL states eolf   {}
 
 
 eolf:
@@ -95,8 +94,8 @@ DIGIT rules EOL next    {
   bdd new_state = sources_[$1];
   for (auto cond : *$2)
       new_state &= cond.first ?
-        bdd_ithvar(2 * nb_bits_ + cond.second) :
-        !bdd_ithvar(2 * nb_bits_ + cond.second);
+        bdd_ithvar(cond.second) :
+        !bdd_ithvar(cond.second);
   states_ |= new_state;
   delete $2;
 
@@ -112,13 +111,19 @@ rules:
 | ID rules              {
   $$ = $2;
   if (id_map_.find(*$1) == id_map_.end())
-    id_map_[*$1] = id_map_.size() - 1;
+    {
+      unsigned size = id_map_.size() + nb_bits_ * 2;
+      id_map_[*$1] = size;
+    }
   $$->push_back(std::make_pair(true, id_map_[*$1]));
 }
 | "!" ID rules          {
   $$ = $3;
   if (id_map_.find(*$2) == id_map_.end())
-    id_map_[*$2] = id_map_.size() - 1;
+    {
+      unsigned size = id_map_.size() + nb_bits_ * 2;
+      id_map_[*$2] = size;
+    }
   $$->push_back(std::make_pair(false, id_map_[*$2]));
 }
 ;
