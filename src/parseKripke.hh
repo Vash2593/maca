@@ -75,7 +75,7 @@ public:
     return succ_to_pred_;
   }
 
-  bdd get_succs()
+  bdd& get_succs()
   {
     return succs_;
   }
