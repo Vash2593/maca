@@ -119,10 +119,3 @@ private:
   bddPair* succ_to_pred_;
   bdd succs_;
 };
-
-int main(int argc, char** argv)
-{
-  assert(argc == 2);
-  parseKripke k;
-  k.parse_bdd(std::string(argv[1]));
-}

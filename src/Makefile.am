@@ -8,6 +8,6 @@ SUBDIRS = kripkeparse ctlparse
 
 bin_PROGRAMS += maca
 
-maca_SOURCES = maca.cc verification/verification.cc
+maca_SOURCES = main.cc verification/verification.cc
 
 LDADD += $(top_builddir)/src/kripkeparse/libkripke.la
