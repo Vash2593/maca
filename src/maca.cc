@@ -51,7 +51,32 @@ public:
     kripke::driver d(states_, transitions_, source, destination, id_map_, bits_need);
     return d.parse_file(str);
   }
+public:
+  // Get
+  bdd& get_states()
+  {
+    return states_;
+  }
 
+  bdd& get_transitions()
+  {
+    return transitions_;
+  }
+
+  bddPair* get_pred_to_succ()
+  {
+    return pred_to_succ_;
+  }
+
+  bddPair* get_succ_to_pred()
+  {
+    return succ_to_pred_;
+  }
+
+  bdd get_succs()
+  {
+    return succs_;
+  }
 private:
   void create_pairs(unsigned bits_need)
   {
