@@ -46,26 +46,33 @@ struct Incremental
   class verif
   {
   public:
-    verif(bdd states, bdd transition, bdd succs, bddPair* succ_to_pred);
+    verif(bdd states, bdd transition, bdd succs,
+          bddPair* succ_to_pred, bddPair* pred_to_succ, bddmap& map);
   public:
-    bdd bdd_and(bdd f, bdd g);
-    bdd bdd_or(bdd f, bdd g);
-    bdd bdd_not(bdd f);
-    bdd bdd_implies(bdd f, bdd g);
-    bdd bdd_ap(bdd f);
-    bdd bdd_anext(bdd f);
-    bdd bdd_enext(bdd f);
-    bdd bdd_afuture(bdd f);
-    bdd bdd_efuture(bdd f);
-    bdd bdd_aglobally(bdd f);
-    bdd bdd_eglobally(bdd f);
-    bdd bdd_auntil(bdd f, bdd g);
-    bdd bdd_euntil(bdd f, bdd g);
+#define OP_BIN(name) bdd bdd_##name(bdd f, bdd g)
+    OP_BIN(and);
+    OP_BIN(or);
+    OP_BIN(implies);
+    OP_BIN(euntil);
+    OP_BIN(auntil);
+#undef OP_BIN
+#define OP_UN(name) bdd bdd_##name(bdd f)
+    OP_UN(not);
+    OP_UN(ap);
+    OP_UN(anext);
+    OP_UN(enext);
+    OP_UN(afuture);
+    OP_UN(efuture);
+    OP_UN(aglobally);
+    OP_UN(eglobally);
+#undef OP_UN
   private:
     bdd& states_;
     bdd& transitions_;
     bdd& succs_;
     bddPair* succ_to_pred_;
+    bddPair* pred_to_succ_;
+    bdd support_;
   };
 } // End namespace verif.
 
