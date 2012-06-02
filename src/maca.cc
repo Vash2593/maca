@@ -8,14 +8,14 @@
 
 #include <verification/verification.hh>
 
-class parse
+class parseKripke
 {
   typedef std::vector<bdd> vbdd;
 
 public:
-  parse(bdd& states, bdd& transitions)
-    : states_(states)
-    , transitions_(transitions)
+  parseKripke()
+    : states_(bddfalse)
+    , transitions_(bddfalse)
     , pred_to_succ_(0)
     , succ_to_pred_(0)
     , succs_(bddtrue)
@@ -98,8 +98,6 @@ private:
 int main(int argc, char** argv)
 {
   assert(argc == 2);
-  bdd states;
-  bdd transitions;
-  parse k(states, transitions);
+  parseKripke k;
   k.parse_bdd(std::string(argv[1]));
 }
