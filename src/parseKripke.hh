@@ -1,3 +1,5 @@
+#ifndef SRC_PARSEKRIPKE_HH
+# define SRC_PARSEKRIPKE_HH
 #include <fstream>
 #include <vector>
 #include <cmath>
@@ -6,11 +8,11 @@
 
 #include <kripkeparse/driver.hh>
 
-#include <verification/verification.hh>
-
 class parseKripke
 {
+public:
   typedef std::vector<bdd> vbdd;
+  typedef std::map<std::string, int> bddmap;
 
 public:
   parseKripke()
@@ -77,6 +79,12 @@ public:
   {
     return succs_;
   }
+
+  bddmap& get_map()
+  {
+    return id_map_;
+  }
+
 private:
   void create_pairs(unsigned bits_need)
   {
@@ -112,10 +120,12 @@ private:
   }
 
 private:
-  std::map<std::string, int> id_map_;
+  bddmap id_map_;
   bdd states_;
   bdd transitions_;
   bddPair* pred_to_succ_;
   bddPair* succ_to_pred_;
   bdd succs_;
 };
+
+#endif // !SRC_PARSEKRIPKE_HH
