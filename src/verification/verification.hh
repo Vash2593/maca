@@ -46,7 +46,7 @@ struct Incremental
   class verif
   {
   public:
-    verif(bdd states, bdd transition, bdd succs,
+    verif(bdd& states, bdd& transition, bdd& succs,
           bddPair* succ_to_pred, bddPair* pred_to_succ, bddmap& map);
   public:
 #define OP_BIN(name) bdd bdd_##name(bdd f, bdd g)
