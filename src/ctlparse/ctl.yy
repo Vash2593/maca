@@ -16,6 +16,7 @@
   #include <string>
   #include "location.hh"
   #include <bdd.h>
+  #include <sstream>
   #include <verification/verification.hh>
 
   typedef std::vector<bdd> bdd_vect;
@@ -34,6 +35,41 @@
         bdd_vect* array;
         bdd elt;
     };
+
+#define CHECK_ARITY(loc, iexp, name, size)      \
+    if (size != iexp)                           \
+    {                                           \
+      std::string s = "Operator ";              \
+      s += name;                                \
+      s += " expects ";                         \
+      s += #iexp;                               \
+      s += " arguments, ";                      \
+      s += #size;                               \
+      s += " given.";                           \
+      ctl::parser::error(loc, s);               \
+    }
+
+#define N_AND bdd_and
+#define N_OR bdd_or
+#define N_NOT bdd_not
+#define N_IMPLIES bdd_implies
+#define N_AX bdd_anext
+#define N_EX bdd_enext
+#define N_AF bdd_afuture
+#define N_EF bdd_efuture
+#define N_AG bdd_aglobally
+#define N_EG bdd_eglobally
+#define N_AU bdd_auntil
+#define N_EU bdd_euntil
+
+#define CALL_BINARY(loc, type, args)            \
+    CHECK_ARITY(loc, 2, #type, args->size());   \
+    v.N_##type((*args)[0], (*args)[1]);
+
+#define CALL_UNARY(loc, type, args)            \
+    CHECK_ARITY(loc, 1, #type, args->size());   \
+    v.N_##type((*args)[0]);
+
   } // namespace ctl
 #define YYSTYPE ctl::sem_type
 }
@@ -93,7 +129,60 @@ term { $$ = $1; }
 ;
 
 fun_call:
-"keyword" "(" args ")" { std::cout << "fun_call: " << $1 << std::endl; }
+"keyword" "(" args ")" { switch ($1)
+  {
+    case AND: {
+                CALL_BINARY(@$, AND, $3);
+                break;
+              }
+
+    case OR:  {
+                CALL_BINARY(@$, OR, $3);
+                break;
+              }
+
+    case NOT: {
+                CALL_UNARY(@$, NOT, $3);
+                break;
+              }
+
+    case IMPLIES: {
+                     CALL_BINARY(@$, IMPLIES, $3);
+                     break;
+                  }
+    case AX: {
+               CALL_UNARY(@$, AX, $3);
+               break;
+             }
+    case EX: {
+               CALL_UNARY(@$, EX, $3);
+               break;
+             }
+    case AF: {
+               CALL_UNARY(@$, AF, $3);
+               break;
+             }
+    case EF: {
+               CALL_UNARY(@$, EF, $3);
+               break;
+             }
+    case AG: {
+               CALL_UNARY(@$, AG, $3);
+               break;
+             }
+    case EG: {
+               CALL_UNARY(@$, EG, $3);
+               break;
+             }
+    case EU: {
+               CALL_BINARY(@$, EU, $3);
+               break;
+             }
+    case AU: {
+               CALL_BINARY(@$, AU, $3);
+               break;
+             }
+  }; }
 ;
 
 // 'exp[, exp]*'
