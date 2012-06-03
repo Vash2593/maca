@@ -92,15 +92,22 @@ namespace verif
     return bdd_not(bdd_efuture(bdd_not(f)));
   }
 
-  // // FIXME: Write me
-  // bdd
-  // verif::bdd_auntil(bdd f, bdd g)
-  // {}
+  bdd
+  verif::bdd_auntil(bdd f, bdd g)
+  {
+    auto lambda = [&] (bdd f, bdd g) {
+      return bdd_and(f, bdd_anext(g));
+    };
+    return bdd_recursion<Incremental>(lambda, f, g, support_);
+  }
 
-  // // FIXME: Write me
-  // bdd
-  // verif::bdd_euntil(bdd f, bdd g)
-  // {
-  // }
+  bdd
+  verif::bdd_euntil(bdd f, bdd g)
+  {
+    auto lambda = [&] (bdd f, bdd g) {
+      return bdd_and(f, bdd_enext(g));
+    };
+    return bdd_recursion<Incremental>(lambda, f, g, support_);
+  }
 
 } // End namespace verif.
