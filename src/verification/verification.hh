@@ -13,7 +13,7 @@ namespace verif
   bdd
   bdd_recursion(Lambda l, bdd prev, bdd support)
   {
-    bdd res;
+    bdd res = bddfalse;
     while (true)
       {
         res = RecurType::op(prev, l(prev));
@@ -23,7 +23,23 @@ namespace verif
       }
     return bdd_exist(res, support);
   }
-struct Incremental
+
+  template <typename RecurType, class Lambda>
+  bdd
+  bdd_recursion(Lambda l, bdd f, bdd g, bdd support)
+  {
+    bdd res = bddfalse;
+    while (true)
+      {
+        res = RecurType::op(g, l(f, g));
+        if (res == f)
+          break;
+        f = res;
+      }
+    return bdd_exist(res, support);
+  }
+
+  struct Incremental
   {
     // Incremental recursion for bdd formula. This struct must be pass
     // as template parameters to bdd_recursion.
