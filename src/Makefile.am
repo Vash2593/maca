@@ -10,4 +10,5 @@ bin_PROGRAMS += maca
 
 maca_SOURCES = main.cc verification/verification.cc parseKripke.cc
 
-LDADD += $(top_builddir)/src/kripkeparse/libkripke.la
+LDADD += $(top_builddir)/src/kripkeparse/libkripke.la \
+	 $(top_builddir)/src/ctlparse/libctl.la
