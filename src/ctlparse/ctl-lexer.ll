@@ -23,6 +23,29 @@
 QKind yylval->uval = Kind; return TOK(KEYWORD)
 
 
+/* Hack Flex so we read from a string instead of reading from a file.  */
+#define YY_INPUT(buf, result, max_size)					\
+  do {									\
+    result = (max_size < to_parse_size) ? max_size : to_parse_size;	\
+    memcpy(buf, to_parse, result);					\
+    to_parse_size -= result;						\
+    to_parse += result;							\
+  } while (0);
+
+static const char* to_parse = 0;
+static size_t to_parse_size = 0;
+static int start_token = 0;
+
+
+void
+flex_set_buffer(const char* buf, int start_tok)
+{
+  to_parse = buf;
+  to_parse_size = strlen(to_parse);
+  start_token = start_tok;
+}
+
+
 %}
 
 id      ([a-zA-Z0-9]+)
@@ -37,6 +60,13 @@ eol     (\n|\n\r|\r\n|\r)
   unsigned int uval = 0;
   enum keyword_kind { AND, OR, NOT, IMPLIES,
                       AX, EX, AF, EF, AG, EG, AU, EU };
+
+  // if (start_token)
+  //   {
+  //     int t = start_token;
+  //     start_token = 0;
+  //     return t;
+  //   }
 
   yylloc->step();
 %}

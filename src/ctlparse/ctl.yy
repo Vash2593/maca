@@ -21,6 +21,8 @@
 
   typedef std::vector<bdd> bdd_vect;
 
+  void flex_set_buffer(const char *buf, int start_tok);
+
   namespace ctl
   {
     enum keyword_kind { AND, OR, NOT, IMPLIES,
@@ -220,19 +222,22 @@ namespace ctl
 
   bool ctl_parse(std::string name, verif::verif& v, bdd initial)
   {
-    if (ctlyyopen(name))
-    {
-      std::cout << ctl::location() << ": Cannot open file " + name
-                << std::endl;
-      return 0;
-    }
+    // if (ctlyyopen(name))
+    // {
+    //   std::cout << ctl::location() << ": Cannot open file " + name
+    //             << std::endl;
+    //   return 0;
+    // }
 
     bool res = false;
+
+    // FIXME
+    flex_set_buffer(name.c_str(), 42);
 
     parser p(v, res, initial);
     p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
-    ctlyyclose();
+//    ctlyyclose();
 
 
 
