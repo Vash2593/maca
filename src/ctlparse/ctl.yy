@@ -199,10 +199,10 @@ term:
 "id" { auto it = v.get_map().find($1);
   if (it == v.get_map().end())
     ctl::parser::error(@$, "Unknown identifier.");
-  $$ = bdd_ithvar(it->second);
+  $$ = v.bdd_ap(bdd_ithvar(it->second));
  }
-| "true" { $$ = bddtrue; }
-| "false" { $$ = bddfalse; }
+| "true" { $$ = v.bdd_ap(bddtrue); }
+| "false" { $$ = v.bdd_ap(bddfalse); }
 ;
 
 
