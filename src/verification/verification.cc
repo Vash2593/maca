@@ -12,6 +12,7 @@ namespace verif
     , succ_to_pred_(succ_to_pred)
     , pred_to_succ_(pred_to_succ)
     , support_(bddtrue)
+    , map_(map)
   {
     for (auto v : map)
       support_ &= bdd_ithvar(v.second);
@@ -108,6 +109,11 @@ namespace verif
       return bdd_and(f, bdd_enext(g));
     };
     return bdd_recursion<Incremental>(lambda, f, g, support_);
+  }
+
+  const bddmap& verif::get_map() const
+  {
+    return map_;
   }
 
 } // End namespace verif.

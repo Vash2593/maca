@@ -1,5 +1,6 @@
 #include <parseKripke.hh>
 #include <verification/verification.hh>
+#include <ctlparse/ctl-public.hh>
 
 int main(int argc, char** argv)
 {
@@ -12,10 +13,9 @@ int main(int argc, char** argv)
                  k.get_succs(), k.get_succ_to_pred(),
                  k.get_pred_to_succ(), k.get_map());
 
-  bddmap& map = k.get_map();
-  bdd a = bdd_ithvar(map["a"]);
+  bool res = ctl::ctl_parse("-", f, k.get_initial_state());
 
-  std::cerr << f.bdd_eglobally(f.bdd_ap(a)) << std::endl;
+  std::cout << "res: " << std::boolalpha << res << std::endl;
 
-  return 0;
+  return !res;
 }

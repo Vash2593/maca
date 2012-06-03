@@ -62,13 +62,13 @@
 #define N_AU bdd_auntil
 #define N_EU bdd_euntil
 
-#define CALL_BINARY(loc, type, args)            \
+#define CALL_BINARY(loc, type, args, res)       \
     CHECK_ARITY(loc, 2, #type, args->size());   \
-    v.N_##type((*args)[0], (*args)[1]);
+    res = v.N_##type((*args)[0], (*args)[1])
 
-#define CALL_UNARY(loc, type, args)            \
+#define CALL_UNARY(loc, type, args, res)        \
     CHECK_ARITY(loc, 1, #type, args->size());   \
-    v.N_##type((*args)[0]);
+    res = v.N_##type((*args)[0])
 
   } // namespace ctl
 #define YYSTYPE ctl::sem_type
@@ -107,7 +107,7 @@
 %token <uval> DIGIT "digit"
 ;
 
-%token <kval> KEYWORD "keyword";
+%token <uval> KEYWORD "keyword";
 
 %token <sval> ID "id";
 
@@ -122,7 +122,9 @@
 %%
 
 file:
-exp { res = (initial & $1) != bddfalse ? true : false; }
+exp {
+  res = (initial & $1) != bddfalse ? true : false;
+}
 ;
 
 exp:
@@ -131,59 +133,59 @@ term { $$ = $1; }
 ;
 
 fun_call:
-"keyword" "(" args ")" { switch ($1)
+"keyword" "(" args ")" {
+  switch ($1)
   {
     case AND: {
-                CALL_BINARY(@$, AND, $3);
+                CALL_BINARY(@$, AND, $3, $$);
                 break;
               }
 
     case OR:  {
-                CALL_BINARY(@$, OR, $3);
+                CALL_BINARY(@$, OR, $3, $$);
                 break;
               }
-
     case NOT: {
-                CALL_UNARY(@$, NOT, $3);
+                CALL_UNARY(@$, NOT, $3, $$);
                 break;
               }
-
     case IMPLIES: {
-                     CALL_BINARY(@$, IMPLIES, $3);
+                CALL_BINARY(@$, IMPLIES, $3, $$);
                      break;
                   }
     case AX: {
-               CALL_UNARY(@$, AX, $3);
+                CALL_UNARY(@$, AX, $3, $$);
                break;
              }
     case EX: {
-               CALL_UNARY(@$, EX, $3);
+                CALL_UNARY(@$, EX, $3, $$);
                break;
              }
     case AF: {
-               CALL_UNARY(@$, AF, $3);
+                CALL_UNARY(@$, AF, $3, $$);
                break;
              }
     case EF: {
-               CALL_UNARY(@$, EF, $3);
+                CALL_UNARY(@$, EF, $3, $$);
                break;
              }
     case AG: {
-               CALL_UNARY(@$, AG, $3);
+                CALL_UNARY(@$, AG, $3, $$);
                break;
              }
     case EG: {
-               CALL_UNARY(@$, EG, $3);
+                CALL_UNARY(@$, EG, $3, $$);
                break;
              }
     case EU: {
-               CALL_BINARY(@$, EU, $3);
+                CALL_BINARY(@$, EU, $3, $$);
                break;
              }
     case AU: {
-               CALL_BINARY(@$, AU, $3);
+                CALL_BINARY(@$, AU, $3, $$);
                break;
              }
+    default: assert(0);
   }; }
 ;
 
@@ -194,7 +196,11 @@ exp             { $$ = new bdd_vect; $$->push_back($1); }
 ;
 
 term:
-"id" { $$ = bddtrue; }
+"id" { auto it = v.get_map().find($1);
+  if (it == v.get_map().end())
+    ctl::parser::error(@$, "Unknown identifier.");
+  $$ = bdd_ithvar(it->second);
+ }
 | "true" { $$ = bddtrue; }
 | "false" { $$ = bddfalse; }
 ;
@@ -220,12 +226,15 @@ namespace ctl
                 << std::endl;
       return 0;
     }
+
     bool res = false;
 
     parser p(v, res, initial);
     p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
     ctlyyclose();
+
+
 
     return res;
   }

@@ -82,6 +82,8 @@ namespace verif
     OP_UN(aglobally);
     OP_UN(eglobally);
 #undef OP_UN
+
+      const bddmap& get_map() const;
   private:
     bdd& states_;
     bdd& transitions_;
@@ -89,6 +91,7 @@ namespace verif
     bddPair* succ_to_pred_;
     bddPair* pred_to_succ_;
     bdd support_;
+    bddmap& map_;
   };
 } // End namespace verif.
 

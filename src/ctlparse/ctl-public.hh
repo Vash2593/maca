@@ -4,7 +4,7 @@
 
 namespace ctl
 {
-  void* ctl_parse(std::string name);
+  bool ctl_parse(std::string name, verif::verif& v, bdd initial);
 } // End namespace ctl.
 
 
