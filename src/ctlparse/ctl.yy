@@ -94,6 +94,8 @@
 }
 
 %parse-param{ verif::verif& v }
+%parse-param{ bool& res }
+%parse-param{ bdd initial }
 
 %token EOL      "eol"
        NEG      "!"
@@ -120,7 +122,7 @@
 %%
 
 file:
-  exp
+exp { res = (initial & $1) != bddfalse ? true : false; }
 ;
 
 exp:
@@ -210,7 +212,7 @@ namespace ctl
 
 
 
-  void* ctl_parse(std::string name, verif::verif& v)
+  bool ctl_parse(std::string name, verif::verif& v, bdd initial)
   {
     if (ctlyyopen(name))
     {
@@ -218,13 +220,14 @@ namespace ctl
                 << std::endl;
       return 0;
     }
+    bool res = false;
 
-    parser p(v);
+    parser p(v, res, initial);
     p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
     ctlyyclose();
 
-    return 0;
+    return res;
   }
 
 } // End namespace ctl.
