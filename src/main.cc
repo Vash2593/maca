@@ -3,7 +3,7 @@
 
 int main(int argc, char** argv)
 {
-  using bddmap = parseKripke::bddmap;
+  typedef parseKripke::bddmap bddmap;
   assert(argc == 2);
   parseKripke k;
   k.parse_bdd(std::string(argv[1]));
