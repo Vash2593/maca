@@ -22,7 +22,7 @@
 
 %}
 
-id      ([a-zA-Z0-9]*)
+id      ([a-zA-Z][a-zA-Z0-9]*)
 digit   ([0-9]*)
 eol     (\n|\n\r|\r\n)
 
