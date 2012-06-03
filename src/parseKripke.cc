@@ -25,6 +25,7 @@ int parseKripke::parse_bdd(std::string str)
     source.push_back(new_source);
     destination.push_back(bdd_replace(new_source, pred_to_succ_));
   }
+  initial_state_ = source[0];
   kripke::driver d(states_, transitions_, source,
                    destination, id_map_, bits_need);
   return d.parse_file(str);

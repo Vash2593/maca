@@ -21,12 +21,13 @@ public:
     , pred_to_succ_(0)
     , succ_to_pred_(0)
     , succs_(bddtrue)
+    , initial_state_(bddfalse)
   {
     bdd_init(1000000, 10000);
     bdd_setvarnum(10000);
   }
 
-    int parse_bdd(std::string str);
+  int parse_bdd(std::string str);
 
 public:
   // Get
@@ -60,6 +61,11 @@ public:
     return id_map_;
   }
 
+
+  bdd& get_initial_state()
+  {
+    return initial_state_;
+  }
 private:
   void create_pairs(unsigned bits_need)
   {
@@ -101,6 +107,7 @@ private:
   bddPair* pred_to_succ_;
   bddPair* succ_to_pred_;
   bdd succs_;
+  bdd initial_state_;
 };
 
 #endif // !SRC_PARSEKRIPKE_HH
