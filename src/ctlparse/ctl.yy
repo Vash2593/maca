@@ -15,6 +15,10 @@
   #include <iostream>
   #include <string>
   #include "location.hh"
+  #include <bdd.h>
+  #include <verification/verification.hh>
+
+  typedef std::vector<bdd> bdd_vect;
 
   namespace ctl
   {
@@ -27,6 +31,8 @@
         unsigned uval;
         std::string sval;
         keyword_kind kval;
+        bdd_vect* array;
+        bdd elt;
     };
   } // namespace ctl
 #define YYSTYPE ctl::sem_type
@@ -51,6 +57,8 @@
 
 }
 
+%parse-param{ verif::verif& v }
+
 %token EOL      "eol"
        NEG      "!"
        LPAREN   "("
@@ -61,12 +69,13 @@
 %token <uval> DIGIT "digit"
 ;
 
-%token <kval> KEYWORD "keyword"
-;
+%token <kval> KEYWORD "keyword";
 
-%token <sval> ID "id"
-;
+%token <sval> ID "id";
 
+%type <array> args;
+
+%type <elt> exp term fun_call;
 
 %printer { debug_stream() << $$;  } <sval> <kval>;
 
@@ -79,8 +88,8 @@ file:
 ;
 
 exp:
-  term
-| fun_call
+term { $$ = $1; }
+| fun_call { $$ = $1; }
 ;
 
 fun_call:
@@ -89,14 +98,14 @@ fun_call:
 
 // 'exp[, exp]*'
 args:
-  exp
-| args "," exp
+exp             { $$ = new bdd_vect; $$->push_back($1); }
+| args "," exp { $$->push_back($3); }
 ;
 
 term:
-"id"
-| "true"
-| "false"
+"id" { $$ = bddtrue; }
+| "true" { $$ = bddtrue; }
+| "false" { $$ = bddfalse; }
 ;
 
 
@@ -112,7 +121,7 @@ namespace ctl
 
 
 
-  void* ctl_parse(std::string name)
+  void* ctl_parse(std::string name, verif::verif& v)
   {
     if (ctlyyopen(name))
     {
@@ -121,7 +130,7 @@ namespace ctl
       return 0;
     }
 
-    parser p;
+    parser p(v);
     p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
     ctlyyclose();
