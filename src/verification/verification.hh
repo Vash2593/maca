@@ -24,14 +24,14 @@ namespace verif
     return bdd_exist(res, support);
   }
 
-  template <typename RecurType, class Lambda>
+  template <typename RecurTypeL, typename RecurTypeR, class Lambda>
   bdd
   bdd_recursion(Lambda l, bdd f, bdd g, bdd support)
   {
     bdd res = bddfalse;
     while (true)
       {
-        res = RecurType::op(g, l(f, g));
+        res = RecurTypeL::op(g, RecurTypeR::op(f, l(f)));
         if (res == f)
           break;
         f = res;
