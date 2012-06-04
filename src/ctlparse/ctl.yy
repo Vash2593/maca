@@ -226,13 +226,6 @@ namespace ctl
 
   bool ctl_parse(std::string name, verif::verif& v, bdd initial)
   {
-    // if (ctlyyopen(name))
-    // {
-    //   std::cout << ctl::location() << ": Cannot open file " + name
-    //             << std::endl;
-    //   return 0;
-    // }
-
     bool res = false;
 
     // FIXME
@@ -241,9 +234,6 @@ namespace ctl
     parser p(v, res, initial);
     p.set_debug_level(!!getenv("YYDEBUG"));
     p.parse();
-//    ctlyyclose();
-
-
 
     return res;
   }
