@@ -200,8 +200,12 @@ exp             { $$ = new bdd_vect; $$->push_back($1); }
 term:
 "id" { auto it = v.get_map().find($1);
   if (it == v.get_map().end())
-    ctl::parser::error(@$, "Unknown identifier.");
-  $$ = v.bdd_ap(bdd_ithvar(it->second));
+  {
+    ctl::parser::error(@$, "Unknown identifier: " + $1 + ".");
+    YYABORT;
+  }
+  else
+    $$ = v.bdd_ap(bdd_ithvar(it->second));
  }
 | "true" { $$ = v.bdd_ap(bddtrue); }
 | "false" { $$ = v.bdd_ap(bddfalse); }
