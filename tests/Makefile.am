@@ -12,6 +12,10 @@ LDADD = $(top_builddir)/src/ctlparse/libctl.la
 # TESTS =					\
 #   parse-ctl.test
 
+TESTS= \
+  simple.test \
+  medium.test
+
 EXTRA_DIST = $(TESTS)
 
 distclean-local:

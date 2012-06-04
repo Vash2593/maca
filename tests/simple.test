@@ -1,0 +1,57 @@
+#! /bin/sh
+
+test -f defs || { echo "defs not found" && exit 1; }
+
+set -e
+
+. ./defs
+
+run()
+{
+    expout=$1
+    shift
+    exitcode=0
+    "$@" || exitcode=$?
+    test $exitcode = $expout || exit 1
+}
+
+cat >input <<EOF
+3
+0 x !w
+  1
+1 x !w
+  2 0
+2 !x w
+  1
+EOF
+
+run 0 $top_builddir/maca input "x"
+run 0 $top_builddir/maca input "EU(x, w)"
+run 1 $top_builddir/maca input "AU(x, w)"
+run 0 $top_builddir/maca input "EX(EX(w))"
+run 0 $top_builddir/maca input "EX(EX(NOT(w)))"
+run 0 $top_builddir/maca input "AND(x, NOT(w))"
+run 0 $top_builddir/maca input "OR(x, w)"
+run 0 $top_builddir/maca input "EG(x)"
+run 1 $top_builddir/maca input "AG(x)"
+run 1 $top_builddir/maca input "EX(AX(x))"
+run 0 $top_builddir/maca input "EX(NOT(NOT(x)))"
+run 0 $top_builddir/maca input "AND(NOT(w), NOT(AX(w)))"
+
+
+cat >input <<EOF
+3
+0 x !w
+  1 0
+1 !x !w
+  2
+2 !x w
+  1
+EOF
+
+
+run 1 $top_builddir/maca input "AX(x)"
+run 0 $top_builddir/maca input "EX(AX(NOT(w)))"
+run 1 $top_builddir/maca input "AX(EX(NOT(w)))"
+run 0 $top_builddir/maca input "AND(EX(x), AF(NOT(w)))"
+run 1 $top_builddir/maca input "NOT(NOT(NOT(NOT(NOT(AND(EX(x), AF(NOT(w))))))))"

@@ -1,0 +1,39 @@
+#! /bin/sh
+
+test -f defs || { echo "defs not found" && exit 1; }
+
+set -e
+
+. ./defs
+
+run()
+{
+    expout=$1
+    shift
+    exitcode=0
+    "$@" || exitcode=$?
+    test $exitcode = $expout || exit 1
+}
+
+cat >input <<EOF
+6
+0 a b
+  1
+1 a !b
+  3
+2 a b
+  3
+3 !a b
+  3 4 5
+4 a b
+5 a !b
+  5 6
+6 !a !b
+EOF
+
+run 0 $top_builddir/maca input "AU(a, b)"
+run 0 $top_builddir/maca input "AX(AU(a, b))"
+run 0 $top_builddir/maca input "AX(AX(NOT(a)))"
+run 1 $top_builddir/maca input "AG(a)"
+run 1 $top_builddir/maca input "EG(b)"
+run 0 $top_builddir/maca input "EX(AF(b))"

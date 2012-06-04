@@ -73,6 +73,7 @@ AC_CONFIG_FILES([
   src/kripkeparse/Makefile
   src/ctlparse/Makefile
   tests/Makefile
+  tests/defs
 ])
 
 AC_OUTPUT
