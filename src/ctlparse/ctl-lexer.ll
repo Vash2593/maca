@@ -108,7 +108,7 @@ eol     (\n|\n\r|\r\n|\r)
 
 {id}          yylval->sval = yytext; return TOK(ID);
 
-
+" "|"\t" continue;
 %%
 
 namespace ctl
