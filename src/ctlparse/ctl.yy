@@ -202,7 +202,7 @@ term:
   if (it == v.get_map().end())
   {
     ctl::parser::error(@$, "Unknown identifier: " + $1 + ".");
-    YYABORT;
+    exit(2);
   }
   else
     $$ = v.bdd_ap(bdd_ithvar(it->second));
