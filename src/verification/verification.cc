@@ -96,19 +96,19 @@ namespace verif
   bdd
   verif::bdd_euntil(bdd f, bdd g)
   {
-    auto lambda = [&] (bdd succ) {
-      return bdd_enext(succ);
+    auto lambda = [&] (bdd f) {
+      return bdd_enext(f);
     };
-    return bdd_recursion<Incremental, Decremental>(lambda, f, g, support_);
+    return bdd_or(g, bdd_recursion<Incremental, Decremental>(lambda, f, g, support_));
   }
 
   bdd
   verif::bdd_auntil(bdd f, bdd g)
   {
-    auto lambda = [&] (bdd succ) {
-      return bdd_anext(succ);
+    auto lambda = [&] (bdd f) {
+      return bdd_anext(f);
     };
-    return bdd_recursion<Incremental, Decremental>(lambda, f, g, support_);
+    return bdd_or(g, bdd_recursion<Incremental, Decremental>(lambda, f, g, support_));
   }
 
   const bddmap& verif::get_map() const

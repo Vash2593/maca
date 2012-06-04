@@ -28,13 +28,14 @@ namespace verif
   bdd
   bdd_recursion(Lambda l, bdd f, bdd g, bdd support)
   {
+
     bdd res = bddfalse;
     while (true)
       {
-        res = RecurTypeL::op(g, RecurTypeR::op(f, l(f)));
-        if (res == f)
+        res = RecurTypeL::op(g, RecurTypeR::op(f, l(g)));
+        if (res == g)
           break;
-        f = res;
+        g = res;
       }
     return bdd_exist(res, support);
   }
