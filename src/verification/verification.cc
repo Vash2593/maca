@@ -40,14 +40,12 @@ namespace verif
   bdd
   verif::bdd_implies(bdd f, bdd g)
   {
-    // FIXME: Ask Pollux
     return bdd_or(bdd_not(f), g);
   }
 
   bdd
   verif::bdd_ap(bdd f)
   {
-    // GOOD
     return bdd_exist(states_ & f, support_);
   }
 
