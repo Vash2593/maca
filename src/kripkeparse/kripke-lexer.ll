@@ -29,10 +29,6 @@ eol     (\n|\n\r|\r\n)
 %%
 
 %{
-  unsigned open_brace = 0;
-  std::string *sval = 0;
-  unsigned int ival = 0;
-
   yylloc->step();
 %}
 

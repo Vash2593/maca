@@ -55,19 +55,8 @@ eol     (\n|\n\r|\r\n|\r)
 %%
 
 %{
-  unsigned open_brace = 0;
-  std::string *sval = 0;
-  unsigned int uval = 0;
   enum keyword_kind { AND, OR, NOT, IMPLIES,
                       AX, EX, AF, EF, AG, EG, AU, EU };
-
-  // if (start_token)
-  //   {
-  //     int t = start_token;
-  //     start_token = 0;
-  //     return t;
-  //   }
-
   yylloc->step();
 %}
 
