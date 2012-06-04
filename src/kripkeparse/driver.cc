@@ -35,13 +35,6 @@ namespace kripke
     return res;
   }
 
-  int
-  driver::parse_string(const std::string& e, const location& l)
-  {
-    scan_open(e);
-    return parse();
-  }
-
   void
   driver::error(const location& l, const std::string& m)
   {
