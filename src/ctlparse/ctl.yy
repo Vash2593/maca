@@ -49,6 +49,7 @@
       s += #size;                               \
       s += " given.";                           \
       ctl::parser::error(loc, s);               \
+      exit(2);                                  \
     }
 
 #define N_AND bdd_and
@@ -220,6 +221,7 @@ namespace ctl
   parser::error (const location_type& l, const std::string& m)
   {
     std::cerr << l << ": " << m << std::endl;
+    exit(2);
   }
 
 
