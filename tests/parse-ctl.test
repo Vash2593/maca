@@ -1,12 +1,50 @@
 #! /bin/sh
 
+test -f defs || { echo "defs not found" && exit 1; }
 
-cat >test.tst <<EOF
-AG(AG(AG(AG(AND(w1, false)))))
+set -e
+
+. ./defs
+
+run()
+{
+    expout=$1
+    shift
+    exitcode=0
+    "$@" || exitcode=$?
+    test $exitcode = $expout || exit 1
+}
+
+cat >input <<EOF
+6
+0 a b
+  1
+1 a !b
+  3
+2 a b
+  3
+3 !a b
+  3 4 5
+4 a b
+5 a !b
+  5 6
+6 !a !b
 EOF
 
-./parse_ctl test.tst
+# Bad paren
+run 2 $top_builddir/maca input "AX(b"
 
-rm test.tst
+# Unknown var
+run 2 $top_builddir/maca input "AX(d)"
 
+# Unknown function
+run 2 $top_builddir/maca input "ANEXT(b)"
+
+# Bad arity
+run 2 $top_builddir/maca input "AX(b, a)"
+run 2 $top_builddir/maca input "AU(b)"
+run 2 $top_builddir/maca input "AG(b, a)"
+run 2 $top_builddir/maca input "AU(b, a, b)"
+
+rm input
 

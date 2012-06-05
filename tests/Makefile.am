@@ -14,7 +14,8 @@ LDADD = $(top_builddir)/src/ctlparse/libctl.la
 
 TESTS= \
   simple.test \
-  medium.test
+  medium.test \
+  parse-ctl.test
 
 EXTRA_DIST = $(TESTS)
 

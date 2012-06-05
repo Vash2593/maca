@@ -37,3 +37,12 @@ run 0 $top_builddir/maca input "AX(AX(NOT(a)))"
 run 1 $top_builddir/maca input "AG(a)"
 run 1 $top_builddir/maca input "EG(b)"
 run 0 $top_builddir/maca input "EX(AF(b))"
+run 0 $top_builddir/maca input "AF(a)"
+run 0 $top_builddir/maca input "AG(EU(a, b))"
+run 1 $top_builddir/maca input "AG(NOT(EU(a, b)))"
+run 1 $top_builddir/maca input "AX(b)"
+run 0 $top_builddir/maca input "AF(a)"
+run 0 $top_builddir/maca input "EU(a, NOT(a))"
+run 0 $top_builddir/maca input "AX(EU(NOT(b), b))"
+
+rm input
