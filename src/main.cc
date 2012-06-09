@@ -2,10 +2,17 @@
 #include <verification/verification.hh>
 #include <ctlparse/ctl-public.hh>
 
+void usage(char* prgm, int exit_value)
+{
+  std::cerr << "usage: " << prgm << " kripke.file \'formula\'" << std::endl;
+  exit(exit_value);
+}
+
 int main(int argc, char** argv)
 {
   typedef parseKripke::bddmap bddmap;
-  assert(argc == 3);
+  if(argc != 3)
+    usage(argv[0], 42);
   parseKripke k;
   k.parse_bdd(std::string(argv[1]));
 
@@ -15,7 +22,7 @@ int main(int argc, char** argv)
 
   bool res = ctl::ctl_parse(argv[2], f, k.get_initial_state());
 
-  std::cout << "res: " << std::boolalpha << res << std::endl;
+  std::cout << "result: " << std::boolalpha << res << std::endl;
 
   return !res;
 }

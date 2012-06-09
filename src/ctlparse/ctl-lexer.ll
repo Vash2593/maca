@@ -34,15 +34,12 @@ QKind yylval->uval = Kind; return TOK(KEYWORD)
 
 static const char* to_parse = 0;
 static size_t to_parse_size = 0;
-static int start_token = 0;
-
 
 void
-flex_set_buffer(const char* buf, int start_tok)
+flex_set_buffer(const char* buf)
 {
   to_parse = buf;
   to_parse_size = strlen(to_parse);
-  start_token = start_tok;
 }
 
 

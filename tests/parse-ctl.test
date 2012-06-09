@@ -47,4 +47,3 @@ run 2 $top_builddir/maca input "AG(b, a)"
 run 2 $top_builddir/maca input "AU(b, a, b)"
 
 rm input
-

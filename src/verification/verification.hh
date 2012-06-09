@@ -9,6 +9,12 @@ namespace verif
 
   typedef parseKripke::bddmap bddmap;
 
+
+  // Generic and efficient. Use To avoid duplication of code in the
+  // fix point algorithm.  To use in pass as template parameters the
+  // type of recursion (Incremental or Decremental structure) and a
+  // lambda function. The lambda function must get one parameters of
+  // type `bdd' and return a `bdd' type.
   template <class RecurType, class Lambda>
   bdd
   bdd_recursion(Lambda l, bdd prev, bdd support)
@@ -24,6 +30,7 @@ namespace verif
     return bdd_exist(res, support);
   }
 
+  // Sorry for the copy-paste
   template <typename RecurTypeL, typename RecurTypeR, class Lambda>
   bdd
   bdd_recursion(Lambda l, bdd f, bdd g, bdd support)
@@ -40,26 +47,27 @@ namespace verif
     return bdd_exist(res, support);
   }
 
+  // Incremental recursion for bdd formula. This struct must be pass
+  // as template parameters to bdd_recursion.
   struct Incremental
   {
-    // Incremental recursion for bdd formula. This struct must be pass
-    // as template parameters to bdd_recursion.
     static bdd op(bdd l, bdd r)
     {
       return l | r;
     }
   };
 
+  // Decrmental recursion for bdd formula. This struct must be pass as
+  // template parameters to bdd_recursion.
   struct Decremental
   {
-    // Decrmental recursion for bdd formula. This struct must be pass
-    // as template parameters to bdd_recursion.
     static bdd op(bdd l, bdd r)
     {
       return l & r;
     }
   };
 
+  // Define the Ctl operators.
   class verif
   {
   public:
@@ -94,6 +102,7 @@ namespace verif
     bdd support_;
     bddmap& map_;
   };
+
 } // End namespace verif.
 
 #endif // !VERIFICATION_VERIFICATION_HH_

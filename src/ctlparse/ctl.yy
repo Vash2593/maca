@@ -21,7 +21,7 @@
 
   typedef std::vector<bdd> bdd_vect;
 
-  void flex_set_buffer(const char *buf, int start_tok);
+  void flex_set_buffer(const char *buf);
 
   namespace ctl
   {
@@ -224,14 +224,11 @@ namespace ctl
     exit(2);
   }
 
-
-
   bool ctl_parse(std::string name, verif::verif& v, bdd initial)
   {
     bool res = false;
 
-    // FIXME
-    flex_set_buffer(name.c_str(), 42);
+    flex_set_buffer(name.c_str());
 
     parser p(v, res, initial);
     p.set_debug_level(!!getenv("YYDEBUG"));

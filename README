@@ -1,12 +1,16 @@
 # -*- mode: org -*-
-
+* MacGiver project
+** Packages needed for building
+   - gcc-4.6
+   - bison 2.5
+   - flex 2.5
+   - buddy 1.4
 * Bison and Flex
 
   The rules of our Makefile about flex and bison are highly inspired
   of the [[http://lrde.epita.fr/cgi-bin/twiki/view/Vaucanson/Vaucanson][Vaucanson]]'s Makefiles.
 
 * Lexing and Parsing
-
 ** CTL
 
    We follow the rules given by the subject nearly exactly. We allow
@@ -23,4 +27,3 @@
    a list of argument to the method. Each method is responsible of the
    number of argument they receive, and must print an error if this
    number is wrong.
-* bdd_load/bdd_save

@@ -2,7 +2,7 @@
 AC_PREREQ([2.61])
 
 # Congratulation this project has reach the version number `moreir_a'.
-AC_INIT([Model-Checking], [moreir_a], [moreira@lrde.epita.fr], [badie_t])
+AC_INIT([Model-Checking], [moreir_a], [badie@lrde.epita.fr; moreira@lrde.epita.fr], [badie_t])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 

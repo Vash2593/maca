@@ -8,6 +8,11 @@
 # include <bdd.h>
 # include <map>
 
+// We pass this function the buddy Garbage Collector
+static void nullfct(int, bddGbcStat*)
+{}
+
+// Read the structure in a file with the `parse_bdd' function.
 class parseKripke
 {
 public:
@@ -25,12 +30,13 @@ public:
   {
     bdd_init(1000000, 10000);
     bdd_setvarnum(10000);
+    bdd_gbc_hook(nullfct);
   }
 
   int parse_bdd(std::string str);
 
 public:
-  // Get
+  // Getters
   bdd& get_states()
   {
     return states_;
@@ -67,6 +73,7 @@ public:
     return initial_state_;
   }
 private:
+  // Create pairs with the needed bits
   void create_pairs(unsigned bits_need)
   {
     pred_to_succ_ = bdd_newpair();
@@ -81,6 +88,8 @@ private:
       }
   }
 
+  // Get the size of the automaton
+  /// We need to undo the read of an integer in the stream
   unsigned get_size(std::string& str)
   {
     if (str == "-")
@@ -95,6 +104,7 @@ private:
     return size;
   }
 
+  // Get the number of bits needed
   unsigned get_bits_need(unsigned size)
   {
     return (unsigned int) std::ceil(std::log2(size));

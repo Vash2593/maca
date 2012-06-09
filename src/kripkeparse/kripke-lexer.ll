@@ -84,7 +84,3 @@ namespace kripke
       yypop_buffer_state();
     }
 } // namespace kripke
-
-// Local Variables:
-// mode: C++
-// End:

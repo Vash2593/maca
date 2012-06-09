@@ -10,6 +10,7 @@
 
 namespace kripke
 {
+  // Driver for the kripke parser
   class driver
   {
   public:

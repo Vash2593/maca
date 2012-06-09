@@ -6,16 +6,15 @@ AM_LDFLAGS += -lbdd
 SUBDIRS = kripkeparse ctlparse
 
 
-bin_PROGRAMS += ../maca
+bin_PROGRAMS += ../gyver
 
-___maca_SOURCES = main.cc verification/verification.cc parseKripke.cc
+___gyver_SOURCES = main.cc verification/verification.cc parseKripke.cc
 
 LDADD += $(top_builddir)/src/kripkeparse/libkripke.la \
 	 $(top_builddir)/src/ctlparse/libctl.la
 
-___macadir= $(includedir)/src
-___maca_HEADERS =                                       \
-  kripkeparse/kripke.hh                                 \
+___gyverdir= $(includedir)/src
+___gyver_HEADERS =                                       \
   kripkeparse/driver.hh                                 \
   parseKripke.hh                                        \
   ctlparse/ctl-public.hh                                \
