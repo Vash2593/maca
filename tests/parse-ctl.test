@@ -32,18 +32,18 @@ cat >input <<EOF
 EOF
 
 # Bad paren
-run 2 $top_builddir/maca input "AX(b"
+run 2 $top_builddir/gyver input "AX(b"
 
 # Unknown var
-run 2 $top_builddir/maca input "AX(d)"
+run 2 $top_builddir/gyver input "AX(d)"
 
 # Unknown function
-run 2 $top_builddir/maca input "ANEXT(b)"
+run 2 $top_builddir/gyver input "ANEXT(b)"
 
 # Bad arity
-run 2 $top_builddir/maca input "AX(b, a)"
-run 2 $top_builddir/maca input "AU(b)"
-run 2 $top_builddir/maca input "AG(b, a)"
-run 2 $top_builddir/maca input "AU(b, a, b)"
+run 2 $top_builddir/gyver input "AX(b, a)"
+run 2 $top_builddir/gyver input "AU(b)"
+run 2 $top_builddir/gyver input "AG(b, a)"
+run 2 $top_builddir/gyver input "AU(b, a, b)"
 
 rm input

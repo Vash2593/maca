@@ -25,18 +25,18 @@ cat >input <<EOF
   1
 EOF
 
-run 0 $top_builddir/maca input "x"
-run 0 $top_builddir/maca input "EU(x, w)"
-run 1 $top_builddir/maca input "AU(x, w)"
-run 0 $top_builddir/maca input "EX(EX(w))"
-run 0 $top_builddir/maca input "EX(EX(NOT(w)))"
-run 0 $top_builddir/maca input "AND(x, NOT(w))"
-run 0 $top_builddir/maca input "OR(x, w)"
-run 0 $top_builddir/maca input "EG(x)"
-run 1 $top_builddir/maca input "AG(x)"
-run 1 $top_builddir/maca input "EX(AX(x))"
-run 0 $top_builddir/maca input "EX(NOT(NOT(x)))"
-run 0 $top_builddir/maca input "AND(NOT(w), NOT(AX(w)))"
+run 0 $top_builddir/gyver input "x"
+run 0 $top_builddir/gyver input "EU(x, w)"
+run 1 $top_builddir/gyver input "AU(x, w)"
+run 0 $top_builddir/gyver input "EX(EX(w))"
+run 0 $top_builddir/gyver input "EX(EX(NOT(w)))"
+run 0 $top_builddir/gyver input "AND(x, NOT(w))"
+run 0 $top_builddir/gyver input "OR(x, w)"
+run 0 $top_builddir/gyver input "EG(x)"
+run 1 $top_builddir/gyver input "AG(x)"
+run 1 $top_builddir/gyver input "EX(AX(x))"
+run 0 $top_builddir/gyver input "EX(NOT(NOT(x)))"
+run 0 $top_builddir/gyver input "AND(NOT(w), NOT(AX(w)))"
 
 
 cat >input <<EOF
@@ -50,8 +50,8 @@ cat >input <<EOF
 EOF
 
 
-run 1 $top_builddir/maca input "AX(x)"
-run 0 $top_builddir/maca input "EX(AX(NOT(w)))"
-run 1 $top_builddir/maca input "AX(EX(NOT(w)))"
-run 0 $top_builddir/maca input "AND(EX(x), AF(NOT(w)))"
-run 1 $top_builddir/maca input "NOT(NOT(NOT(NOT(NOT(AND(EX(x), AF(NOT(w))))))))"
+run 1 $top_builddir/gyver input "AX(x)"
+run 0 $top_builddir/gyver input "EX(AX(NOT(w)))"
+run 1 $top_builddir/gyver input "AX(EX(NOT(w)))"
+run 0 $top_builddir/gyver input "AND(EX(x), AF(NOT(w)))"
+run 1 $top_builddir/gyver input "NOT(NOT(NOT(NOT(NOT(AND(EX(x), AF(NOT(w))))))))"

@@ -31,18 +31,18 @@ cat >input <<EOF
 6 !a !b
 EOF
 
-run 0 $top_builddir/maca input "AU(a, b)"
-run 0 $top_builddir/maca input "AX(AU(a, b))"
-run 0 $top_builddir/maca input "AX(AX(NOT(a)))"
-run 1 $top_builddir/maca input "AG(a)"
-run 1 $top_builddir/maca input "EG(b)"
-run 0 $top_builddir/maca input "EX(AF(b))"
-run 0 $top_builddir/maca input "AF(a)"
-run 0 $top_builddir/maca input "AG(EU(a, b))"
-run 1 $top_builddir/maca input "AG(NOT(EU(a, b)))"
-run 1 $top_builddir/maca input "AX(b)"
-run 0 $top_builddir/maca input "AF(a)"
-run 0 $top_builddir/maca input "EU(a, NOT(a))"
-run 0 $top_builddir/maca input "AX(EU(NOT(b), b))"
+run 0 $top_builddir/gyver input "AU(a, b)"
+run 0 $top_builddir/gyver input "AX(AU(a, b))"
+run 0 $top_builddir/gyver input "AX(AX(NOT(a)))"
+run 1 $top_builddir/gyver input "AG(a)"
+run 1 $top_builddir/gyver input "EG(b)"
+run 0 $top_builddir/gyver input "EX(AF(b))"
+run 0 $top_builddir/gyver input "AF(a)"
+run 0 $top_builddir/gyver input "AG(EU(a, b))"
+run 1 $top_builddir/gyver input "AG(NOT(EU(a, b)))"
+run 1 $top_builddir/gyver input "AX(b)"
+run 0 $top_builddir/gyver input "AF(a)"
+run 0 $top_builddir/gyver input "EU(a, NOT(a))"
+run 0 $top_builddir/gyver input "AX(EU(NOT(b), b))"
 
 rm input
