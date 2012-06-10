@@ -19,12 +19,18 @@ AC_SUBST([LIBTOOL_DEPS])
 ## -------- ##
 ## C++ CODE ##
 ## -------- ##
+[if test -z "$CXXFLAGS"; then
+   # if CXXFLAGS is not set, we preset it to -O with this setting, we
+   # prevent autoconf from defaulting it to "-g -O2"
+   export CXXFLAGS="-O2"
+fi]
+
 AC_PROG_CXX
 
 if test x$GXX = xyes; then
    case x`$CXX -dumpversion`x in
-   xx|x2*|x3*|x4.[[0123456]]*)
-     AC_MSG_ERROR([GNU g++ version 4.7 or later is required]);;
+   xx|x2*|x3*|x4.[[012345]]*)
+     AC_MSG_ERROR([GNU g++ version 4.6 or later is required]);;
    *);;
    esac
 fi
