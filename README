@@ -48,14 +48,32 @@ where f and g can be another operator. Spaces are allowed.
 
 ** Implementation details
 
+*** Fix Point algorithm
+
+    We introduce an highly factorized function to perform the fix
+    point algorithm. This function take as template parameters the
+    type of the recursion (if we are in incremental or decremental fix
+    point) and take as parameters the input `bdd' and a lambda making
+    the recursion. The prototype of this function is:
+
+#+begin_src c++
+  template <class RecurType, class Lambda>
+  bdd
+  bdd_recursion(Lambda l, bdd prev, bdd support)
+#+end_src
+
+  The function argument `support' is a bdd containing the variable to
+  clean when we leave the algorithm.
+
+  A version with variadic template was written, but the syntax was not
+  clear for the reading, and construction of unused appear.
+
 *** Lexing and Parsing
 
 **** Bison and Flex
 
      The rules of our Makefile about flex and bison are highly inspired
      of the [[http://lrde.epita.fr/cgi-bin/twiki/view/Vaucanson/Vaucanson][Vaucanson]]'s Makefiles.
-
-
 
 **** CTL
 
