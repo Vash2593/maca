@@ -1,0 +1,25 @@
+#! /bin/sh
+
+test -f defs || { echo "defs not found" && exit 1; }
+
+set -e
+
+. ./defs
+
+run()
+{
+    expout=$1
+    shift
+    exitcode=0
+    "$@" || exitcode=$?
+    test $exitcode = $expout || exit 1
+}
+
+kripke=$top_srcdir/tests/cl3serv3.kripke
+
+run 0 $top_builddir/gyver $kripke "EF(NOT(IMPLIES(w1,AF(s1))))"
+run 1 $top_builddir/gyver $kripke "AG(IMPLIES(w1,AF(s1)))"
+run 0 $top_builddir/gyver $kripke "EG(IMPLIES(w1,AF(s1)))"
+run 1 $top_builddir/gyver $kripke "EG(w1)"
+run 0 $top_builddir/gyver $kripke "EF(OR(w1, IMPLIES(w1,AF(s1))))"
+
